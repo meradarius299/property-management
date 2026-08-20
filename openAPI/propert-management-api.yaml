@@ -1,0 +1,232 @@
+openapi: 3.0.3
+info:
+  title: Property Management API
+  description: >
+    API pentru gestionarea proprietăților imobiliare (CRUD) și un mic
+    endpoint utilitar de calculator, expus de aplicația Spring Boot
+    property-management.
+  version: 1.0.0
+  contact:
+    name: Property Management Team
+servers:
+  - url: http://localhost:8080
+    description: Server local de dezvoltare
+
+tags:
+  - name: Properties
+    description: Operații CRUD asupra proprietăților
+  - name: Calculator
+    description: Endpoint utilitar de calcul
+
+paths:
+  /api/v1/properties/save:
+    post:
+      tags: [Properties]
+      operationId: saveProperty
+      summary: Creează o proprietate nouă
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+      responses:
+        '201':
+          description: Proprietate creată
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+
+  /api/v1/properties:
+    get:
+      tags: [Properties]
+      operationId: getAllProperties
+      summary: Listează toate proprietățile
+      responses:
+        '200':
+          description: Lista proprietăților
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyDTO'
+
+  /api/v1/properties/{propertyId}:
+    put:
+      tags: [Properties]
+      operationId: updateProperty
+      summary: Actualizează complet o proprietate
+      parameters:
+        - $ref: '#/components/parameters/PropertyId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+      responses:
+        '201':
+          description: Proprietate actualizată
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+    delete:
+      tags: [Properties]
+      operationId: deleteProperty
+      summary: Șterge o proprietate
+      parameters:
+        - $ref: '#/components/parameters/PropertyId'
+      responses:
+        '204':
+          description: Proprietate ștearsă
+
+  /api/v1/properties/update_description/{propertyId}:
+    patch:
+      tags: [Properties]
+      operationId: updatePropertyDescription
+      summary: Actualizează doar descrierea unei proprietăți
+      parameters:
+        - $ref: '#/components/parameters/PropertyId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+      responses:
+        '200':
+          description: Descriere actualizată
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+
+  /api/v1/properties/update_price/{propertyId}:
+    patch:
+      tags: [Properties]
+      operationId: updatePropertyPrice
+      summary: Actualizează doar prețul unei proprietăți
+      parameters:
+        - $ref: '#/components/parameters/PropertyId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+      responses:
+        '200':
+          description: Preț actualizat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+
+  /api/v1/calculator/add:
+    get:
+      tags: [Calculator]
+      operationId: addNumbers
+      summary: Adună doi termeni
+      parameters:
+        - name: a
+          in: query
+          required: true
+          schema: { type: number, format: double }
+        - name: b
+          in: query
+          required: true
+          schema: { type: number, format: double }
+      responses:
+        '200':
+          description: Rezultatul adunării
+          content:
+            application/json:
+              schema: { type: number, format: double }
+
+  /api/v1/calculator/sub/{a}/{b}:
+    get:
+      tags: [Calculator]
+      operationId: subNumbers
+      summary: Scade doi termeni (valoare absolută a diferenței)
+      parameters:
+        - name: a
+          in: path
+          required: true
+          schema: { type: number, format: double }
+        - name: b
+          in: path
+          required: true
+          schema: { type: number, format: double }
+      responses:
+        '200':
+          description: Rezultatul scăderii
+          content:
+            application/json:
+              schema: { type: number, format: double }
+
+  /api/v1/calculator/mul:
+    post:
+      tags: [Calculator]
+      operationId: multiplyNumbers
+      summary: Înmulțește 4 termeni
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculatorDTO'
+      responses:
+        '201':
+          description: Rezultatul înmulțirii
+          content:
+            application/json:
+              schema: { type: number, format: double }
+
+components:
+  parameters:
+    PropertyId:
+      name: propertyId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  schemas:
+    PropertyDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        title:
+          type: string
+        description:
+          type: string
+        ownerName:
+          type: string
+        ownerEmail:
+          type: string
+        price:
+          type: number
+          format: double
+        address:
+          type: string
+    CalculatorDTO:
+      type: object
+      properties:
+        a:
+          type: number
+          format: double
+        b:
+          type: number
+          format: double
+        c:
+          type: number
+          format: double
+        num4:
+          type: number
+          format: double
