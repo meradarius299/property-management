@@ -62,7 +62,7 @@ body {
     align-items: center;
     justify-content: center;
     background:
-        linear-gradient(180deg, var(--ink) 0%, var(--ink) 45%, var(--parchment) 45%, var(--parchment) 100%);
+            linear-gradient(180deg, var(--ink) 0%, var(--ink) 45%, var(--parchment) 45%, var(--parchment) 100%);
     padding: 24px;
 }
 
@@ -140,6 +140,62 @@ body {
     color: var(--success);
 }
 
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 14px 0;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--parchment-line);
+}
+
+.google-role-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.google-role-label select {
+    padding: 6px 8px;
+    border: 1px solid #D6D1C4;
+    border-radius: 2px;
+    font-size: 13px;
+}
+
+.google-btn-slot {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-switch {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 22px 0 0 0;
+}
+
+.auth-switch a {
+    color: var(--brass-deep);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
 /* ===== Buttons ===== */
 .btn-primary {
     background: var(--ink);
@@ -165,6 +221,8 @@ body {
     border-radius: 2px;
     font-size: 13px;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .btn-ghost:hover {
@@ -182,11 +240,26 @@ body {
     padding: 18px 40px;
 }
 
+.topbar .wordmark {
+    color: #fff;
+}
+
 .topbar-user {
     display: flex;
     align-items: center;
     gap: 14px;
     font-size: 14px;
+}
+
+.username-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.username-link:hover {
+    text-decoration: underline;
+    color: var(--brass);
 }
 
 .role-badge {
@@ -228,8 +301,9 @@ body {
 
 .property-form {
     display: grid;
-    grid-template-columns: 1.4fr 1.4fr 1fr 1.6fr auto;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.6fr) auto;
     gap: 10px;
+    align-items: center;
     background: #fff;
     border: 1px solid var(--parchment-line);
     padding: 18px;
@@ -242,6 +316,11 @@ body {
     border-radius: 2px;
     font-size: 14px;
     font-family: var(--sans);
+}
+
+.property-form .btn-primary {
+    padding: 10px 20px;
+    white-space: nowrap;
 }
 
 .property-table {
@@ -289,10 +368,97 @@ body {
     text-decoration: underline;
 }
 
+.edit-link {
+    background: none;
+    border: none;
+    color: var(--brass-deep);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 14px;
+}
+
+.edit-link:hover {
+    text-decoration: underline;
+}
+
+.save-link {
+    background: none;
+    border: none;
+    color: var(--success);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 14px;
+}
+
+.save-link:hover {
+    text-decoration: underline;
+}
+
+.cancel-link {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.cancel-link:hover {
+    text-decoration: underline;
+}
+
+.editing-row td {
+    background: #FBFAF7;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.editing-row input {
+    width: 100%;
+    padding: 7px 8px;
+    border: 1px solid #D6D1C4;
+    border-radius: 2px;
+    font-size: 14px;
+    font-family: var(--sans);
+}
+
 .empty-state {
     color: var(--text-muted);
     font-size: 14px;
     padding: 24px 0;
+}
+
+.owner-link {
+    color: var(--brass-deep);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.owner-link:hover {
+    text-decoration: underline;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.back-link:hover {
+    color: var(--brass-deep);
+}
+
+.section-subtitle {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--ink);
+    margin: 32px 0 16px 0;
 }
 
 @media (max-width: 640px) {
