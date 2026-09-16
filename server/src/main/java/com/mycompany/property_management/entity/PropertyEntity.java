@@ -11,16 +11,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PropertyEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "PROPERTY_TITLE", nullable = false, length = 255)
     private String title;
+
     private String description;
-    private String ownerName;
-    @Column(name = "EMAIL")
-    private String ownerEmail;
     private Double price;
     private String address;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "OWNER_ID", nullable = false)
+    private UserEntity owner;
 }

@@ -1,0 +1,209 @@
+openapi: 3.0.3
+info:
+  contact:
+    name: Property Management Team
+  description: |
+    API pentru gestionarea proprietăților imobiliare (CRUD) și un mic endpoint utilitar de calculator, expus de aplicația Spring Boot property-management.
+  title: Property Management API
+  version: 1.0.0
+servers:
+- description: Server local de dezvoltare
+  url: http://localhost:8080
+tags:
+- description: Operații CRUD asupra proprietăților
+  name: Properties
+- description: Endpoint utilitar de calcul
+  name: Calculator
+paths:
+  /api/v1/properties/save:
+    post:
+      operationId: saveProperty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+          description: Proprietate creată
+      summary: Creează o proprietate nouă
+      tags:
+      - Properties
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /api/v1/properties:
+    get:
+      operationId: getAllProperties
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PropertyDTO'
+                type: array
+          description: Lista proprietăților
+      summary: Listează toate proprietățile
+      tags:
+      - Properties
+      x-accepts:
+      - application/json
+  /api/v1/properties/{propertyId}:
+    delete:
+      operationId: deleteProperty
+      parameters:
+      - explode: false
+        in: path
+        name: propertyId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Proprietate ștearsă
+      summary: Șterge o proprietate
+      tags:
+      - Properties
+      x-accepts:
+      - application/json
+    put:
+      operationId: updateProperty
+      parameters:
+      - explode: false
+        in: path
+        name: propertyId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+          description: Proprietate actualizată
+      summary: Actualizează complet o proprietate
+      tags:
+      - Properties
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /api/v1/properties/update_description/{propertyId}:
+    patch:
+      operationId: updatePropertyDescription
+      parameters:
+      - explode: false
+        in: path
+        name: propertyId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+          description: Descriere actualizată
+      summary: Actualizează doar descrierea unei proprietăți
+      tags:
+      - Properties
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /api/v1/properties/update_price/{propertyId}:
+    patch:
+      operationId: updatePropertyPrice
+      parameters:
+      - explode: false
+        in: path
+        name: propertyId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyDTO'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDTO'
+          description: Preț actualizat
+      summary: Actualizează doar prețul unei proprietăți
+      tags:
+      - Properties
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  parameters:
+    PropertyId:
+      explode: false
+      in: path
+      name: propertyId
+      required: true
+      schema:
+        format: int64
+        type: integer
+      style: simple
+  schemas:
+    PropertyDTO:
+      example:
+        address: address
+        ownerName: ownerName
+        price: 6.027456183070403
+        description: description
+        id: 0
+        title: title
+        ownerEmail: ownerEmail
+      properties:
+        id:
+          format: int64
+          readOnly: true
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        ownerName:
+          type: string
+        ownerEmail:
+          type: string
+        price:
+          format: double
+          type: number
+        address:
+          type: string
+      type: object
+
